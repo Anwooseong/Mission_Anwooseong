@@ -21,6 +21,7 @@ public class SayingController {
     }
 
     public void actionWrite() {
+        sayingService.actionWrite(scanner, sayingList);
     }
 
     public void actionList() {
