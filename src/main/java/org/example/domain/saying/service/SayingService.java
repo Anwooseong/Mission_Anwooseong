@@ -3,6 +3,7 @@ package org.example.domain.saying.service;
 import org.example.domain.saying.model.Saying;
 import org.example.domain.saying.repository.SayingRepository;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -25,5 +26,19 @@ public class SayingService {
 
         int saveId = sayingRepository.save(new Saying(id, content, author), sayingList);
         System.out.println(saveId + "번 명언이 등록되었습니다.");
+    }
+
+    public void actionList(List<Saying> sayingList) {
+        System.out.println("번호 / 작가 / 명언");
+        System.out.println("----------------------");
+
+        sayingList.stream()
+                .sorted(Comparator.comparing(Saying::getId).reversed())
+                .forEach(saying -> {
+                    int id = saying.getId();
+                    String content = saying.getContent();
+                    String author = saying.getAuthor();
+                    System.out.println("" + id + " / " + author + " / " + content);
+                });
     }
 }

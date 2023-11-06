@@ -25,6 +25,7 @@ public class SayingController {
     }
 
     public void actionList() {
+        sayingService.actionList(sayingList);
     }
 
     public void actionRemove(UrlParser url) {
