@@ -1,5 +1,6 @@
 package org.example.domain.saying.service;
 
+import org.example.domain.saying.dto.UrlParser;
 import org.example.domain.saying.model.Saying;
 import org.example.domain.saying.repository.SayingRepository;
 
@@ -40,5 +41,14 @@ public class SayingService {
                     String author = saying.getAuthor();
                     System.out.println("" + id + " / " + author + " / " + content);
                 });
+    }
+
+    public void actionRemove(UrlParser url, List<Saying> sayingList) {
+        int findId = url.getParamAsInt("id", 0);
+        if (findId <= 0) {
+            System.out.println("id를 정확히 입력해주세요.");
+            return;
+        }
+        sayingRepository.deleteById(findId, sayingList);
     }
 }

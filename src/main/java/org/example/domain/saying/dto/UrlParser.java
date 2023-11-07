@@ -34,10 +34,14 @@ public class UrlParser {
             String queryParamStr = queryStringBits[i];
             String[] queryParamStrBits = queryParamStr.split("=", 2);
 
-            String paramName = queryParamStrBits[0];
-            String paramValue = queryParamStrBits[1];
+            try {
+                String paramName = queryParamStrBits[0];
+                String paramValue = queryParamStrBits[1];
+                paramsMap.put(paramName, paramValue);
+            } catch (ArrayIndexOutOfBoundsException e) {
+                System.out.println("url을 다시 확인해주세요.");
+            }
 
-            paramsMap.put(paramName, paramValue);
         }
     }
 
