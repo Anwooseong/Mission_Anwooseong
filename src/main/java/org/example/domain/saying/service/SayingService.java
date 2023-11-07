@@ -1,9 +1,12 @@
 package org.example.domain.saying.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.domain.saying.dto.UrlParser;
 import org.example.domain.saying.model.Saying;
 import org.example.domain.saying.repository.SayingRepository;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -11,6 +14,7 @@ import java.util.Scanner;
 
 public class SayingService {
 
+    static final String JSON_FILE = "src/main/resources/data.json";
     private final SayingRepository sayingRepository;
 
     public SayingService() {
@@ -71,5 +75,17 @@ public class SayingService {
         System.out.print("작가 : ");
         findSaying.get().setAuthor(scanner.nextLine());
         System.out.println("" + findId + "번 명언이 수정되었습니다.");
+    }
+
+    public void actionBuild(List<Saying> sayingList) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            FileOutputStream fileOutputStream = new FileOutputStream(JSON_FILE);
+            mapper.writeValue(fileOutputStream, sayingList);
+            fileOutputStream.close();
+            System.out.println("data.json 파일의 내용이 갱신되었습니다.");
+        } catch (IOException e) {
+            System.out.println("JSON 파일에 데이터를 저장할 수 없습니다.");
+        }
     }
 }
