@@ -33,6 +33,7 @@ public class SayingController {
     }
 
     public void actionModify(UrlParser url) {
+        sayingService.actionModify(scanner, url, sayingList);
     }
 
     public void actionBuild() {

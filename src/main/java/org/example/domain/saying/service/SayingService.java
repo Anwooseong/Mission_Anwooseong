@@ -6,6 +6,7 @@ import org.example.domain.saying.repository.SayingRepository;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class SayingService {
@@ -50,5 +51,25 @@ public class SayingService {
             return;
         }
         sayingRepository.deleteById(findId, sayingList);
+    }
+
+    public void actionModify(Scanner scanner, UrlParser url, List<Saying> sayingList) {
+        int findId = url.getParamAsInt("id", 0);
+        if (findId == 0) {
+            System.out.println("id를 정확히 입력해주세요.");
+            return;
+        }
+        Optional<Saying> findSaying = sayingRepository.findById(findId, sayingList);
+        if (findSaying.isEmpty()) {
+            System.out.println("" + findId + "번 명언은 존재하지 않아 수정을 하지 못했습니다.");
+            return;
+        }
+        System.out.println("명언(기존) : " + findSaying.get().getContent());
+        System.out.print("명언 : ");
+        findSaying.get().setContent(scanner.nextLine());
+        System.out.println("작가(기존) : " + findSaying.get().getAuthor());
+        System.out.print("작가 : ");
+        findSaying.get().setAuthor(scanner.nextLine());
+        System.out.println("" + findId + "번 명언이 수정되었습니다.");
     }
 }
